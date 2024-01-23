@@ -33,7 +33,7 @@ class ali_img(Plugin):
             return
         reply = None
         query = e_context["context"].content.strip()
-        print(query + '111111111111111111111')
+        # print(query + '111111111111111111111')
         if query.startswith("画"):
             if os.path.exists('config.json'):
                 config_path = os.path.join(os.path.dirname(__file__), "config.json")
