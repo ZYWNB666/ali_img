@@ -65,3 +65,6 @@ class ali_img(Plugin):
                     reply = Reply(ReplyType.IMAGE_URL, img_url)
                     e_context["reply"] = reply
                     e_context.action = EventAction.BREAK_PASS
+    def get_help_text(self, **kwargs):
+        help_text = "使用方法:\n识别以画开头的语句,比如:\n画一只小猫的素描画\n使用时请把系统配置文件中识别画的那条配置去掉，否则本插件失效"
+        return help_text
