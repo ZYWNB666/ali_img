@@ -50,10 +50,25 @@ class ali_img(Plugin):
                 api_key = apikey
                 if api_key:
                     dashscope.api_key = api_key
+                    sizes = {
+                        '横版': '1280*720',
+                        '竖版': '720*1280',
+                        '正方形': '1024*1024'
+                    } 
+                    chosen_size = '1024*1024'
+                    pattern = re.compile(r'[:：](.*)$')
+                    match = pattern.search(query)
+                    if match:
+                        size_word = match.group(1).strip()  # 从匹配的字符串中提取词
+                        if size_word in sizes:
+                            chosen_size = sizes[size_word]
+                            # 从query中删除尺寸
+                            query = query.replace(':'+size_word, '')
+                            query = query.replace('：'+size_word, '')
                     rsp = dashscope.ImageSynthesis.call(model=dashscope.ImageSynthesis.Models.wanx_v1,
                                                         prompt=query,
                                                         n=1,
-                                                        size='1280*720')
+                                                        size=chosen_size)
                     img_url = rsp.output['results'][0]['url']
                     pic_res = requests.get(img_url, stream=True)
                     if pic_res.status_code != 200:
