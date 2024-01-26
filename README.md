@@ -8,3 +8,6 @@
 ### 参数说明
 冒号中英文均可，为提示词和尺寸的分割符，提示词在前，尺寸之在后
 尺寸可选：横版、竖版、正方形。
+
+apikey获取地址
+https://dashscope.console.aliyun.com/dashboard
