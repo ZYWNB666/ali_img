@@ -70,13 +70,6 @@ class ali_img(Plugin):
                                                         n=1,
                                                         size=chosen_size)
                     img_url = rsp.output['results'][0]['url']
-                    pic_res = requests.get(img_url, stream=True)
-                    if pic_res.status_code != 200:
-                        text = (f"请求失败，状态码：{pic_res.status_code}!")
-                        print(text)
-                        reply = Reply(ReplyType.ERROR, text)
-                        e_context["reply"] = reply
-                        e_context.action = EventAction.BREAK_PASS
                     reply = Reply(ReplyType.IMAGE_URL, img_url)
                     e_context["reply"] = reply
                     e_context.action = EventAction.BREAK_PASS
