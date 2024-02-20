@@ -33,6 +33,7 @@ class ali_img(Plugin):
             return
         reply = None
         query = e_context["context"].content.strip()
+        channel = e_context["channel"]
         # print(query + '111111111111111111111')
         if query.startswith("画"):
             if os.path.exists('config.json'):
@@ -49,6 +50,8 @@ class ali_img(Plugin):
             if query:
                 api_key = apikey
                 if api_key:
+                    reply = Reply(ReplyType.TEXT,"🎨正在飞速绘画中,请耐心等待...")
+                    channel.send(reply,e_context["context"])
                     dashscope.api_key = api_key
                     sizes = {
                         '横版': '1280*720',
