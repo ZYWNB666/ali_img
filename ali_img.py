@@ -33,6 +33,7 @@ class ali_img(Plugin):
             return
         reply = None
         query = e_context["context"].content.strip()
+        channel = e_context["channel"]
         # print(query + '111111111111111111111')
         if query.startswith("画"):
             if os.path.exists('config.json'):
@@ -49,6 +50,8 @@ class ali_img(Plugin):
             if query:
                 api_key = apikey
                 if api_key:
+                    reply = Reply(ReplyType.TEXT,"🎨正在飞速绘画中,请耐心等待...")
+                    channel.send(reply,e_context["context"])
                     dashscope.api_key = api_key
                     sizes = {
                         '横版': '1280*720',
@@ -70,6 +73,13 @@ class ali_img(Plugin):
                                                         n=1,
                                                         size=chosen_size)
                     img_url = rsp.output['results'][0]['url']
+                    pic_res = requests.get(img_url, stream=True)
+                    if pic_res.status_code != 200:
+                        text = (f"请求失败，状态码：{pic_res.status_code}!")
+                        print(text)
+                        reply = Reply(ReplyType.ERROR, text)
+                        e_context["reply"] = reply
+                        e_context.action = EventAction.BREAK_PASS
                     reply = Reply(ReplyType.IMAGE_URL, img_url)
                     e_context["reply"] = reply
                     e_context.action = EventAction.BREAK_PASS
